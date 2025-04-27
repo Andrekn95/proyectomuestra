@@ -1,0 +1,51 @@
+<input type="text" [(ngModel)]="day">
+<br>
+
+IF
+@if (day === '1') {
+  <p> Dia 1</p>
+} @else {
+  <p>Dia no valido</p>
+}
+<br>
+
+SWITCH
+@switch (day) {
+  @case ('1') {
+    Lunes
+  }
+  @case ('2') {
+    Martes
+  }
+  @case ('3') {
+    Miercoles
+  }
+  @default {
+    Dia incorrecto
+  }
+}
+
+FOR
+@for (product of products; track product.id; let x = $index) {
+  <br>
+  {{ x }} hola
+} @empty {
+  No hay productos
+}
+
+@for (product of products; track product.id; let x = $index) {
+  <br>
+  {{ x }} =hola
+}9
+
+@for (x of numeros; track x) {
+  {{ x  }}
+}
+<p hidden>Hola</p>
+<!--<input type="text" [ngModel]="name">-->
+
+<!--<input type="text" [(ngModel)]="lastname">-->
+<!--<br>-->
+
+<!--{{ name }}-->
+<!--{{ lastname }}-->
