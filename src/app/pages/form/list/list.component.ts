@@ -29,6 +29,7 @@ export class ListComponent {
   protected products: ProductInterface[] = [];
   protected product!: ProductInterface;
   protected showUpdateForm: boolean = false;
+  protected showCreateForm: boolean = false; // Nueva variable para controlar el formulario de creación
 
   constructor(
     private httpClient: HttpClient,
@@ -86,7 +87,8 @@ export class ListComponent {
       next: (product) => {
         this.product = product;
         console.log('Producto cargado para actualizar:', this.product);
-        this.showUpdateForm = true; // Muestra el formulario
+        this.showUpdateForm = true; // Muestra el formulario de edición
+        this.showCreateForm = false; // Asegúrate de que el formulario de creación esté oculto
       },
       error: (error) => {
         if (error.status === 404) {
@@ -118,6 +120,34 @@ export class ListComponent {
         alert('Error al guardar el producto');
       }
     });
+  }
+
+  createProduct() {
+    console.log('Creando producto en la API:', this.product);
+
+    this.httpClient.post<ProductInterface>(this.url, this.product).subscribe({
+      next: (newProduct) => {
+        this.products.push(newProduct); // Agregar el nuevo producto a la lista local
+        console.log('Producto creado en la API y agregado a la lista local:', newProduct);
+        alert('Producto creado exitosamente');
+        this.closeForm(); // Cierra el formulario después de crear el producto
+      },
+      error: (error) => {
+        console.error('Error al crear el producto en la API:', error);
+        alert('Error al crear el producto');
+      }
+    });
+  }
+
+  openCreateForm() {
+    this.product = { id: 0, name: '', category: '', quantity: 0 }; // Inicializa un producto vacío
+    this.showCreateForm = true; // Muestra el formulario de creación
+    this.showUpdateForm = false; // Asegúrate de que el formulario de edición esté oculto
+  }
+
+  closeForm() {
+    this.showUpdateForm = false;
+    this.showCreateForm = false;
   }
 
   catchData(updatedProduct: ProductInterface) {

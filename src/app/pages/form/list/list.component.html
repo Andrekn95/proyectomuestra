@@ -1,10 +1,27 @@
+<p-button
+  icon="pi pi-plus"
+  label="Crear Producto"
+  severity="success"
+  [raised]="true"
+  (onClick)="openCreateForm()">
+</p-button>
+
+<div *ngIf="showCreateForm">
+  <app-form 
+    [productIn]="product" 
+    (productOut)="catchData($event)">
+  </app-form>
+  <p-button label="Crear Producto" severity="success" (onClick)="createProduct()"></p-button>
+  <p-button label="X" severity="danger" (onClick)="closeForm()"></p-button>
+</div>
+
 <div *ngIf="showUpdateForm">
   <app-form 
     [productIn]="product" 
     (productOut)="catchData($event)">
   </app-form>
-  <p-button label="Save Product" (onClick)="saveProduct()"></p-button>
-  <p-button label="X" severity="danger" (onClick)="showUpdateForm = false"></p-button>
+  <p-button label="Guardar Cambios" (onClick)="saveProduct()"></p-button>
+  <p-button label="X" severity="danger" (onClick)="closeForm()"></p-button>
 </div>
 
 <div *ngIf="products.length > 0">
@@ -52,4 +69,3 @@
 <div *ngIf="products.length === 0">
   <p>No hay productos disponibles.</p>
 </div>
-
