@@ -1,10 +1,10 @@
-<div *ngIf="product">
-  {{ data | json }}
-  <br>
-  <app-form [productIn]="product" 
-            (productOut)="catchData($event)"
-            (event1)="showEvent($event)">
+<div *ngIf="showUpdateForm">
+  <app-form 
+    [productIn]="product" 
+    (productOut)="catchData($event)">
   </app-form>
+  <p-button label="Save Product" (onClick)="saveProduct()"></p-button>
+  <p-button label="X" severity="danger" (onClick)="showUpdateForm = false"></p-button>
 </div>
 
 <div *ngIf="products.length > 0">
@@ -14,6 +14,7 @@
         <th>ID</th>
         <th>Nombre</th>
         <th>Categoría</th>
+        <th>Cantidad</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
@@ -22,6 +23,7 @@
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.category }}</td>
+        <td>{{ product.quantity }}</td> 
         <td>
           <p-button
             icon="pi pi-trash"
@@ -32,11 +34,21 @@
             variant="text"
             (onClick)="delete(product.id)">
           </p-button>
+          <p-button
+            icon="pi pi-pencil"
+            pTooltip="Actualizar"
+            severity="info"
+            [raised]="true"
+            [rounded]="true"
+            variant="text"
+            (onClick)="update(product.id)">
+          </p-button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
 <div *ngIf="products.length === 0">
   <p>No hay productos disponibles.</p>
 </div>
